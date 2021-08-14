@@ -10,10 +10,11 @@ import com.jsonwitneses.findmyphone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@RestController("/rest")
+@RestController
 public class MetricController {
 
     private final MetricService metricService;
@@ -26,15 +27,25 @@ public class MetricController {
         this.userService = userService;
     }
 
-    @GetMapping("/device/{id}")
-    public MetricDto getMetric(@PathVariable Long id) {
-        MetricDto metric = MetricMapper.metricToDto(metricService.getAllDeviceMetrics(id).get(0));
+    @GetMapping("rest/device/{id}/last")
+    public MetricDto getLastMetric(@PathVariable Long id) {
+        MetricDto metric = MetricMapper.metricToDto(metricService.getLastDeviceMetric(id));
+        return metric;
+    }
+    @GetMapping("rest/device/{id}/all")
+    public MetricDto getAllMetrics(@PathVariable Long id) {
+        MetricDto metric = MetricMapper.metricToDto(metricService.getLastDeviceMetric(id));
         return metric;
     }
 
     @GetMapping("/user/last/{id}")
-    public List<Metric> getLastMetricsForUser(@PathVariable Long id) {
-        return metricService.getLastDeviceMetricsForUser(id);
+    public List<MetricDto> getLastMetricsForUser(@PathVariable Long id) {
+        List<MetricDto> metricDtos = new ArrayList<>();
+        List<Metric> metrics = metricService.getLastDeviceMetricsForUser(id);
+        for (Metric metirc:metrics) {
+            metricDtos.add(MetricMapper.metricToDto(metirc));
+        }
+        return metricDtos;
     }
 
     @PostMapping("/add/metric/{deviceId}")

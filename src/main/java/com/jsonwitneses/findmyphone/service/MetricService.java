@@ -29,6 +29,9 @@ public class MetricService {
         return metric;
     }
 
+    public Metric getLastDeviceMetric(Long id){
+       return locationRepository.getLastMetricForDevice(id);
+    }
     public List<Metric> getLastDeviceMetricsForUser(Long id){
         User user = userRepository.findById(id).orElseThrow(RuntimeException::new);
         Set<Device> devices = user.getDevices();
