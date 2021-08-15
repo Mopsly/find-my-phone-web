@@ -1,24 +1,21 @@
 package com.jsonwitneses.findmyphone.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "devices")
+
+@Document("device")
 public class Device {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String name;
 
-    @ManyToMany
-    @JsonBackReference
     private Set<User> users;
 
     public String getName() {
@@ -45,10 +42,6 @@ public class Device {
         this.metrics = metrics;
     }
 
-    @OneToMany(
-            mappedBy = "device",
-            cascade = {CascadeType.ALL}
-    )
     private List<Metric> metrics;
 
     public Device() {

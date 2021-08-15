@@ -1,52 +1,37 @@
 package com.jsonwitneses.findmyphone.entity;
 
-import javax.persistence.*;
+import com.mongodb.lang.NonNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "location_metric")
+//@Entity
+//@Table(name = "location_metric")
+@Document
 public class Metric {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
     private Device device;
 
-    @Column
     private Long timeStamp;
     //временное решение - широта долгота
-    @Column
+    @NonNull
     private double latitude;
-    @Column
+    @NonNull
     private double longitude;
 
-    @Column
     private int cellid;
-    @Column
     private int lac;
-    @Column
     private int rsrp;
-    @Column
     private int rsrq;
-    @Column
     private int sinr;
 
-    @Column
     private String deviceid;
-    @Column
     private String userid;
-    @Column
     private String imsi;
 
-    public Metric( Long id, Device device, Long timeStamp, double longitude, double latitude) {
-        this.id = id;
-        this.device = device;
-        this.timeStamp = timeStamp;
-        this.latitude = latitude;
-        this.longitude = longitude;
-
-    }
 
     public Metric() {
     }

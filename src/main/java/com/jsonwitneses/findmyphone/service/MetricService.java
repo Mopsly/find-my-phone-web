@@ -30,14 +30,14 @@ public class MetricService {
     }
 
     public Metric getLastDeviceMetric(Long id){
-       return locationRepository.getLastMetricForDevice(id);
+       return locationRepository.getDistinctFirstByDevice_IdOrderByTimeStampDesc(id);
     }
     public List<Metric> getLastDeviceMetricsForUser(Long id){
         User user = userRepository.findById(id).orElseThrow(RuntimeException::new);
         Set<Device> devices = user.getDevices();
         List<Metric> metrics = new ArrayList<>();
         for (Device device: devices) {
-            metrics.add(locationRepository.getLastMetricForDevice(device.getId()));
+            metrics.add(locationRepository.getDistinctFirstByDevice_IdOrderByTimeStampDesc(device.getId()));
         }
         return metrics;
     }

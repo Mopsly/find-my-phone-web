@@ -1,7 +1,10 @@
 package com.jsonwitneses.findmyphone.dto;
 
 
-import javax.persistence.Column;
+//import javax.persistence.Column;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mongodb.lang.NonNull;
 
 public class MetricDto {
     private Long id;
@@ -11,7 +14,9 @@ public class MetricDto {
     private Long timeStamp;
 
     //временное решение - широта долгота
+    @NonNull
     private double longitude;
+    @NonNull
     private double latitude;
 
     private int cellid;

@@ -1,22 +1,20 @@
 package com.jsonwitneses.findmyphone.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
+
+@Document(collection = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+
     private String name;
 
-    @ManyToMany(mappedBy = "users")
-    @JsonManagedReference
     private Set<Device> devices;
 
     public User(Long id, String name, Set<Device> devices) {
